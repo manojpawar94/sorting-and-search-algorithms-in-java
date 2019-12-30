@@ -1,16 +1,24 @@
 package org.manoj.ds.search;
 
-import java.util.Collection;
-
 public class BinearySearch implements Search {
 
     @Override
-    public int search(Collection<Object> collection, Object iteam) {
-        int lowerIndex = 0;
-        int higherIndex = collection.size();
-        int middleIndex = lowerIndex + (higherIndex - lowerIndex) / 2;
+    public <E extends Comparable<E>> int search(E[] collection, E item) {
+        return binearySearch(collection, item, 0, collection.length);
+    }
 
+    private <E extends Comparable<E>> int binearySearch(E[] collection, E item, int lowerIndex, int higherIndex) {
+        int middleIndex = lowerIndex + (higherIndex - lowerIndex) / 2;
         
+        if (higherIndex >= lowerIndex) {
+            if (collection[middleIndex].equals(item)) {
+                return middleIndex;
+            } else if (collection[middleIndex].compareTo(item) > 0) {
+                binearySearch(collection, item, middleIndex + 1, higherIndex);
+            } else if (collection[middleIndex].compareTo(item) < 0) {
+                binearySearch(collection, item, lowerIndex, middleIndex - 1);
+            }
+        }
 
         return -1;
     }
